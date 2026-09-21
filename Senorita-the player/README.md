@@ -1,6 +1,6 @@
 <div align="center">
 
-# ◎ groove
+# ◎ Senorita
 
 **your sound diary**
 
@@ -12,9 +12,9 @@
 
 </div>
 
-## ✦ What is Groove?
+## ✦ What is SENORITA?
 
-Groove is a **music journal** — a beautiful calendar where you save the songs that defined your days. Upload audio files or paste links from Spotify, YouTube Music, or Apple Music. Each memory becomes a vinyl record you can play back anytime.
+SENORITA is a **music journal** — a beautiful calendar where you save the songs that defined your days. Upload audio files or paste links from Spotify, YouTube Music, or Apple Music. Each memory becomes a vinyl record you can play back anytime.
 
 ## ✦ Features
 
@@ -32,7 +32,7 @@ Groove is a **music journal** — a beautiful calendar where you save the songs 
 
 ```bash
 # Clone the repo
-git clone https://github.com/shlokburmi/Groove-Journal.git
+git clone https://github.com/MAjORvvxsol/Senorita-the-player
 
 # Open with Live Server (VS Code) or any static server
 # No build step required — it's pure HTML/CSS/JS
@@ -89,8 +89,8 @@ Each user has their own private, independent diary.
 
 <div align="center">
 
-**[⭐ Star this repo](https://github.com/shlokburmi/Groove-Journal)** if you like the project!
+**[⭐ Star this repo](https://github.com/MAjORvvxsol/Senorita-the-player)** if you like the project!
 
-Made with ♪ by [shlokburmi](https://github.com/shlokburmi)
+Made with ♪ by [dhruv](https://github.com/MAjORvvxsol)
 
 </div>
