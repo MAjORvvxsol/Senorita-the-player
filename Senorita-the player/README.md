@@ -6,7 +6,7 @@
 
 *Every day has a soundtrack. Capture yours.*
 
-[Live Demo](https://groove-journal.vercel.app) · [Report Bug](https://github.com/shlokburmi/Groove-Journal/issues) · [Request Feature](https://github.com/shlokburmi/Groove-Journal/issues)
+[Live Demo](https://senorita-the-player.vercel.app/) · [Report Bug](https://github.com/shlokburmi/Groove-Journal/issues) · [Request Feature](https://github.com/shlokburmi/Groove-Journal/issues)
 
 ---
 
@@ -38,7 +38,7 @@ git clone https://github.com/MAjORvvxsol/Senorita-the-player
 # No build step required — it's pure HTML/CSS/JS
 ```
 
-Or just visit → **[groove-journal.vercel.app](https://groove-journal.vercel.app)**
+Or just visit → **[groove-journal.vercel.app](https://senorita-the-player.vercel.app/)**
 
 ## ✦ How It Works
 
