@@ -134,7 +134,7 @@ function isSpotifyTokenValid() {
 }
 
 // ── Google OAuth Implicit Flow (YouTube Music) ────────────────────────
-const GOOGLE_CLIENT_ID = '914079723485-dj7tsibbth4hjhb1ifhgaq9jp9sslvmv.apps.googleusercontent.com';
+const GOOGLE_CLIENT_ID = '257597225358-mthmp441nn338h5saaj9kskpc189kb6l.apps.googleusercontent.com';
 const GOOGLE_REDIRECT_URI = window.location.origin + window.location.pathname;
 const GOOGLE_SCOPES = 'openid profile email';
 
