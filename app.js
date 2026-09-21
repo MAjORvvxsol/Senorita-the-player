@@ -31,7 +31,7 @@ const PROVIDER_META = {
 };
 
 // ── Spotify OAuth PKCE Config ──────────────────────────────────────────
-const SPOTIFY_CLIENT_ID = 'd1f234370a394629b77a8a9d54d7c22b';
+const SPOTIFY_CLIENT_ID = '1746d9aebd94451297280fea3cfe193f';
 const SPOTIFY_REDIRECT_URI = window.location.origin + window.location.pathname;
 const SPOTIFY_SCOPES = 'user-read-private user-read-email';
 
