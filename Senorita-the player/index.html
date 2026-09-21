@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Senorita — your sound diary</title>
+  <meta name="description"
+    content="A beautiful calendar journal where every day holds a soundtrack memory — connect your music app and capture the sound of your life." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&family=DM+Mono:ital,wght@0,300;1,300&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <!-- Spotify IFrame Embed API (no auth required for embeds) -->
+  <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+  <!-- Ambient background grain -->
+  <div class="grain-overlay"></div>
+
+  <!-- ============================================================ -->
+  <!-- AUTH SCREEN                                                   -->
+  <!-- ============================================================ -->
+  <div class="auth-screen" id="authScreen">
+    <div class="auth-bg-vinyl">
+      <div class="auth-vinyl-record" id="authVinyl">
+        <div class="auth-vinyl-Senoritas"></div>
+        <div class="auth-vinyl-label">
+          <div class="auth-vinyl-hole"></div>
+        </div>
+      </div>
+    </div>
+    <div class="auth-card">
+      <div class="auth-logo">
+        <span class="auth-logo-icon">◎</span>
+        <span class="auth-logo-text">Senorita</span>
+      </div>
+      <p class="auth-tagline">your sound diary</p>
+      <h1 class="auth-headline">Every day has a<br /><em>soundtrack</em>.</h1>
+      <p class="auth-sub">Connect your music app to start saving the songs that defined your days.</p>
+
+      <div class="auth-buttons">
+        <button class="auth-btn auth-spotify" id="authSpotify" aria-label="Sign in with Spotify">
+          <svg class="auth-btn-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
+          </svg>
+          <span class="auth-btn-text">Continue with Spotify</span>
+          <span class="auth-btn-arrow">→</span>
+        </button>
+        <button class="auth-btn auth-apple" id="authApple" aria-label="Sign in with Apple Music">
+          <svg class="auth-btn-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.048-2.31-2.18-3.043a6.926 6.926 0 00-1.87-.837 12.51 12.51 0 00-2.306-.35c-.032 0-.063-.007-.095-.01H6.699C6.661 0 6.621 0 6.581 0A11.4 11.4 0 005.32.11a6.34 6.34 0 00-2.21.643 6.944 6.944 0 00-2.168 1.878A6.586 6.586 0 00.5 4.6a12.048 12.048 0 00-.35 2.282c-.01.282-.013.563-.013.846v9.535c0 .282.003.562.013.846.038.982.17 1.937.462 2.86.364 1.12 1.006 2.048 1.917 2.79.81.657 1.733 1.027 2.726 1.197a12.754 12.754 0 002.29.354c.038.003.076.007.114.007H17.345c.038 0 .076-.004.114-.007a12.754 12.754 0 002.29-.354c1.15-.196 2.152-.62 3.013-1.377.824-.725 1.38-1.619 1.69-2.664.217-.742.342-1.504.373-2.276.008-.21.012-.423.012-.634 0-.034 0-.066-.003-.1V6.97c0-.283-.003-.564-.013-.846zM12 2.93c2.16 0 3.91 1.75 3.91 3.91 0 .27-.03.534-.085.791l-7.65 4.456a3.912 3.912 0 01-.087-.791C8.088 4.68 9.84 2.93 12 2.93zM19.1 17.61L12 21.7l-7.1-4.09V8.79L12 4.7l7.1 4.09v8.82z" />
+          </svg>
+          <span class="auth-btn-text">Continue with Apple Music</span>
+          <span class="auth-btn-arrow">→</span>
+        </button>
+        <button class="auth-btn auth-youtube" id="authYoutube" aria-label="Sign in with YouTube Music">
+          <svg class="auth-btn-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm4.8 12.96l-6.72 3.84A1.08 1.08 0 018.64 15.84V8.16a1.08 1.08 0 011.44-1.014l6.72 3.84a1.08 1.08 0 010 1.974z" />
+          </svg>
+          <span class="auth-btn-text">Continue with YouTube Music</span>
+          <span class="auth-btn-arrow">→</span>
+        </button>
+      </div>
+
+      <p class="auth-skip">
+        <button class="auth-skip-btn" id="authSkip">Skip for now — use file uploads only</button>
+      </p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MAIN APP (hidden until logged in)                            -->
+  <!-- ============================================================ -->
+  <div class="app-wrap" id="appWrap" style="display:none;">
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="header-left">
+          <div class="logo">
+            <span class="logo-icon">◎</span>
+            <span class="logo-text">Senorita</span>
+          </div>
+        </div>
+        <nav class="feature-nav">
+          <button class="feature-link active" id="timelineNavBtn">The Journey</button>
+          <button class="feature-link" id="searchNavBtn">Search</button>
+          <button class="feature-link" id="analyticsNavBtn">Insights</button>
+          <button class="feature-link" id="profileNavBtn">Profile</button>
+        </nav>
+        <div class="header-right">
+          <div class="user-pill-wrap">
+            <div class="user-pill" id="userPill">
+              <span class="user-pill-dot active" id="userPillDot"></span>
+              <span class="user-pill-label" id="userPillLabel">@guest</span>
+              <span class="user-pill-menu-icon">▼</span>
+            </div>
+            <button class="user-pill-logout" id="logoutBtn" title="Sign out" style="display:none;">Sign Out</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Side Panel (Image 2 style) -->
+      <aside class="side-panel">
+        <div class="side-panel-inner">
+          <div class="large-date-wrap">
+            <span class="large-day-number" id="largeDayNumber">01</span>
+            <span class="large-month-name" id="largeMonthName">MARCH</span>
+          </div>
+          
+          <div class="side-stats-list">
+            <div class="stat-block">
+              <span class="stat-num" id="totalMemories">0</span>
+              <span class="stat-tag">MEMORIES SAVED</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-block">
+              <span class="stat-num" id="totalDays">31</span>
+              <span class="stat-tag">DAYS THIS MONTH</span>
+            </div>
+          </div>
+
+          <div class="side-vinyl-wrap">
+            <div class="side-vinyl">
+              <div class="side-vinyl-Senoritas"></div>
+              <div class="side-vinyl-label"></div>
+            </div>
+            <p class="side-vinyl-hint">click any date<br>to add a memory</p>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Calendar Section (Image 1 style) -->
+      <section class="calendar-section">
+        <div class="calendar-hero">
+          <div class="hero-text">
+            <h1 class="hero-title">The Calendar</h1>
+            <p class="hero-subtitle">CHARTING THE RHYTHM OF YOUR YEAR</p>
+          </div>
+          <div class="calendar-nav-controls">
+            <button class="round-nav-btn" id="prevMonthBtn">‹</button>
+            <button class="round-nav-btn" id="nextMonthBtn">›</button>
+          </div>
+        </div>
+
+        <div class="calendar-grid-wrap">
+          <div class="weekdays-grid">
+            <span>MON</span>
+            <span>TUE</span>
+            <span>WED</span>
+            <span>THU</span>
+            <span>FRI</span>
+            <span>SAT</span>
+            <span>SUN</span>
+          </div>
+          <div class="calendar-grid" id="daysGrid">
+            <!-- Day cells populated by JS -->
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <a class="footer-github" href="https://github.com/shlokburmi/Senorita-Journal.git" target="_blank" rel="noopener">
+          <svg class="footer-gh-icon" viewBox="0 0 24 24" fill="currentColor" width="14" height="14">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+          </svg>
+          <span>made by shlokburmi</span>
+          <span class="footer-star">⭐ star on github</span>
+        </a>
+      </div>
+    </footer>
+
+  </div><!-- /.app-wrap -->
+
+  <!-- ============================================================ -->
+  <!-- MODAL: Add Memory                                            -->
+  <!-- ============================================================ -->
+  <div class="modal-overlay" id="addModal" role="dialog" aria-modal="true" aria-labelledby="addModalTitle">
+    <div class="modal-panel" id="addModalPanel">
+      <button class="modal-close" id="addModalClose" aria-label="Close">✕</button>
+      <div class="modal-header">
+        <div class="modal-date-badge" id="modalDateBadge"></div>
+        <h2 class="modal-title" id="addModalTitle">Add a Sound Memory</h2>
+        <p class="modal-subtitle">What was the sound of this day?</p>
+      </div>
+
+      <!-- Vinyl preview -->
+      <div class="modal-vinyl-preview">
+        <div class="vinyl-preview-record spinning-idle">
+          <div class="vp-Senoritas"></div>
+          <div class="vp-label">
+            <div class="vp-hole"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Song title -->
+      <div class="input-group">
+        <label class="input-label" for="songTitleInput">Song / Memory Title</label>
+        <input type="text" id="songTitleInput" class="text-input" placeholder="Name this memory..." maxlength="60" />
+      </div>
+
+      <!-- Note -->
+      <div class="input-group">
+        <label class="input-label" for="songNoteInput">A note for this day <span
+            class="optional">(optional)</span></label>
+        <textarea id="songNoteInput" class="text-input textarea" placeholder="What does this song mean to you today?"
+          maxlength="200" rows="2"></textarea>
+      </div>
+
+      <!-- Upload options -->
+      <div class="upload-section">
+        <div class="upload-tabs" id="uploadTabs">
+          <button class="upload-tab active" id="tabFile" data-tab="file">Upload File</button>
+          <button class="upload-tab" id="tabSpotify" data-tab="spotify">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
+            </svg>
+            Spotify
+          </button>
+          <button class="upload-tab" id="tabApple" data-tab="apple">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.048-2.31-2.18-3.043a6.926 6.926 0 00-1.87-.837 12.51 12.51 0 00-2.306-.35c-.032 0-.063-.007-.095-.01H6.699C6.661 0 6.621 0 6.581 0A11.4 11.4 0 005.32.11a6.34 6.34 0 00-2.21.643 6.944 6.944 0 00-2.168 1.878A6.586 6.586 0 00.5 4.6a12.048 12.048 0 00-.35 2.282c-.01.282-.013.563-.013.846v9.535c0 .282.003.562.013.846.038.982.17 1.937.462 2.86.364 1.12 1.006 2.048 1.917 2.79.81.657 1.733 1.027 2.726 1.197a12.754 12.754 0 002.29.354c.038.003.076.007.114.007H17.345c.038 0 .076-.004.114-.007a12.754 12.754 0 002.29-.354c1.15-.196 2.152-.62 3.013-1.377.824-.725 1.38-1.619 1.69-2.664.217-.742.342-1.504.373-2.276.008-.21.012-.423.012-.634 0-.034 0-.066-.003-.1V6.97c0-.283-.003-.564-.013-.846zM12 2.93c2.16 0 3.91 1.75 3.91 3.91 0 .27-.03.534-.085.791l-7.65 4.456a3.912 3.912 0 01-.087-.791C8.088 4.68 9.84 2.93 12 2.93zM19.1 17.61L12 21.7l-7.1-4.09V8.79L12 4.7l7.1 4.09v8.82z" />
+            </svg>
+            Apple Music
+          </button>
+          <button class="upload-tab" id="tabYoutube" data-tab="youtube">
+            <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm4.8 12.96l-6.72 3.84A1.08 1.08 0 018.64 15.84V8.16a1.08 1.08 0 011.44-1.014l6.72 3.84a1.08 1.08 0 010 1.974z" />
+            </svg>
+            YouTube
+          </button>
+        </div>
+
+        <!-- File upload -->
+        <div class="tab-content active" id="tabContentFile">
+          <div class="file-drop-zone" id="fileDropZone">
+            <div class="drop-icon">♫</div>
+            <p class="drop-text">Drop your audio file here</p>
+            <p class="drop-subtext">or click to browse</p>
+            <input type="file" id="audioFileInput" accept="audio/*" hidden />
+          </div>
+          <div class="file-selected" id="fileSelected" style="display:none;">
+            <span class="file-icon">◉</span>
+            <span class="file-name" id="fileName"></span>
+            <button class="file-remove" id="fileRemove">✕</button>
+          </div>
+
+          <!-- File time range selector -->
+          <div class="clip-section" id="fileClipSection" style="display:none;">
+            <label class="input-label">Save just your favourite moment <span class="optional">(optional)</span></label>
+            <div class="clip-range-wrap">
+              <div class="clip-waveform" id="fileWaveform">
+                <div class="clip-waveform-bars" id="fileWaveformBars"></div>
+                <div class="clip-selection" id="fileClipSelection"></div>
+                <input type="range" class="clip-handle clip-handle-start" id="fileStartHandle" min="0" max="100"
+                  value="0" aria-label="Clip start" />
+                <input type="range" class="clip-handle clip-handle-end" id="fileEndHandle" min="0" max="100" value="100"
+                  aria-label="Clip end" />
+              </div>
+              <div class="clip-time-labels">
+                <span class="clip-time" id="fileClipStartLabel">0:00</span>
+                <span class="clip-duration-badge" id="fileClipDuration">full song</span>
+                <span class="clip-time" id="fileClipEndLabel">0:00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Spotify -->
+        <div class="tab-content" id="tabContentSpotify">
+          <div class="link-input-wrap">
+            <svg class="link-icon" viewBox="0 0 24 24" fill="currentColor"
+              style="width:14px;height:14px;flex-shrink:0;">
+              <path
+                d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
+            </svg>
+            <input type="url" id="spotifyInput" class="text-input link-input"
+              placeholder="https://open.spotify.com/track/..." />
+          </div>
+          <p class="link-note">Paste a Spotify track link. Then select the exact moment in the song you loved.</p>
+
+          <!-- Spotify time range selector -->
+          <div class="clip-section" id="spotifyClipSection">
+            <label class="input-label">Select your favourite moment</label>
+            <div class="clip-manual-wrap">
+              <div class="clip-manual-row">
+                <div class="clip-manual-field">
+                  <label class="clip-manual-label" for="spotifyStartMin">Start</label>
+                  <div class="clip-manual-inputs">
+                    <input type="number" class="clip-num-input" id="spotifyStartMin" min="0" max="59" value="0"
+                      placeholder="mm" aria-label="Start minutes" />
+                    <span class="clip-colon">:</span>
+                    <input type="number" class="clip-num-input" id="spotifyStartSec" min="0" max="59" value="0"
+                      placeholder="ss" aria-label="Start seconds" />
+                  </div>
+                </div>
+                <div class="clip-arrow">→</div>
+                <div class="clip-manual-field">
+                  <label class="clip-manual-label" for="spotifyEndMin">End</label>
+                  <div class="clip-manual-inputs">
+                    <input type="number" class="clip-num-input" id="spotifyEndMin" min="0" max="59" value="3"
+                      placeholder="mm" aria-label="End minutes" />
+                    <span class="clip-colon">:</span>
+                    <input type="number" class="clip-num-input" id="spotifyEndSec" min="0" max="59" value="30"
+                      placeholder="ss" aria-label="End seconds" />
+                  </div>
+                </div>
+              </div>
+              <div class="clip-duration-info" id="spotifyClipInfo">Saving 3:30 of the track</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Apple Music -->
+        <div class="tab-content" id="tabContentApple">
+          <div class="link-input-wrap">
+            <svg class="link-icon" viewBox="0 0 24 24" fill="currentColor"
+              style="width:14px;height:14px;flex-shrink:0;">
+              <path
+                d="M23.994 6.124a9.23 9.23 0 00-.24-2.19c-.317-1.31-1.048-2.31-2.18-3.043a6.926 6.926 0 00-1.87-.837 12.51 12.51 0 00-2.306-.35c-.032 0-.063-.007-.095-.01H6.699C6.661 0 6.621 0 6.581 0A11.4 11.4 0 005.32.11a6.34 6.34 0 00-2.21.643 6.944 6.944 0 00-2.168 1.878A6.586 6.586 0 00.5 4.6a12.048 12.048 0 00-.35 2.282c-.01.282-.013.563-.013.846v9.535c0 .282.003.562.013.846.038.982.17 1.937.462 2.86.364 1.12 1.006 2.048 1.917 2.79.81.657 1.733 1.027 2.726 1.197a12.754 12.754 0 002.29.354c.038.003.076.007.114.007H17.345c.038 0 .076-.004.114-.007a12.754 12.754 0 002.29-.354c1.15-.196 2.152-.62 3.013-1.377.824-.725 1.38-1.619 1.69-2.664.217-.742.342-1.504.373-2.276.008-.21.012-.423.012-.634 0-.034 0-.066-.003-.1V6.97c0-.283-.003-.564-.013-.846zM12 2.93c2.16 0 3.91 1.75 3.91 3.91 0 .27-.03.534-.085.791l-7.65 4.456a3.912 3.912 0 01-.087-.791C8.088 4.68 9.84 2.93 12 2.93zM19.1 17.61L12 21.7l-7.1-4.09V8.79L12 4.7l7.1 4.09v8.82z" />
+            </svg>
+            <input type="url" id="appleInput" class="text-input link-input" placeholder="https://music.apple.com/..." />
+          </div>
+          <p class="link-note">Paste an Apple Music song link. Then set the start and end time of your favourite moment.
+          </p>
+
+          <!-- Apple Music time range selector -->
+          <div class="clip-section" id="appleClipSection">
+            <label class="input-label">Select your favourite moment</label>
+            <div class="clip-manual-wrap">
+              <div class="clip-manual-row">
+                <div class="clip-manual-field">
+                  <label class="clip-manual-label" for="appleStartMin">Start</label>
+                  <div class="clip-manual-inputs">
+                    <input type="number" class="clip-num-input" id="appleStartMin" min="0" max="59" value="0"
+                      placeholder="mm" aria-label="Start minutes" />
+                    <span class="clip-colon">:</span>
+                    <input type="number" class="clip-num-input" id="appleStartSec" min="0" max="59" value="0"
+                      placeholder="ss" aria-label="Start seconds" />
+                  </div>
+                </div>
+                <div class="clip-arrow">→</div>
+                <div class="clip-manual-field">
+                  <label class="clip-manual-label" for="appleEndMin">End</label>
+                  <div class="clip-manual-inputs">
+                    <input type="number" class="clip-num-input" id="appleEndMin" min="0" max="59" value="3"
+                      placeholder="mm" aria-label="End minutes" />
+                    <span class="clip-colon">:</span>
+                    <input type="number" class="clip-num-input" id="appleEndSec" min="0" max="59" value="30"
+                      placeholder="ss" aria-label="End seconds" />
+                  </div>
+                </div>
+              </div>
+              <div class="clip-duration-info" id="appleClipInfo">Saving 3:30 of the track</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- YouTube -->
+        <div class="tab-content" id="tabContentYoutube">
+          <div class="link-input-wrap">
+            <svg class="link-icon" viewBox="0 0 24 24" fill="currentColor"
+              style="width:14px;height:14px;flex-shrink:0;">
+              <path
+                d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm4.8 12.96l-6.72 3.84A1.08 1.08 0 018.64 15.84V8.16a1.08 1.08 0 011.44-1.014l6.72 3.84a1.08 1.08 0 010 1.974z" />
+            </svg>
+            <input type="url" id="youtubeInput" class="text-input link-input"
+              placeholder="https://youtube.com/watch?v=..." />
+          </div>
+          <p class="link-note">Paste a YouTube link. Set your favourite moment — Senorita will remember that exact
+            section.
+          </p>
+
+          <!-- YouTube time range selector -->
+          <div class="clip-section" id="youtubeClipSection">
+            <label class="input-label">Select your favourite moment</label>
+            <div class="clip-manual-wrap">
+              <div class="clip-manual-row">
+                <div class="clip-manual-field">
+                  <label class="clip-manual-label" for="ytStartMin">Start</label>
+                  <div class="clip-manual-inputs">
+                    <input type="number" class="clip-num-input" id="ytStartMin" min="0" max="59" value="0"
+                      placeholder="mm" aria-label="Start minutes" />
+                    <span class="clip-colon">:</span>
+                    <input type="number" class="clip-num-input" id="ytStartSec" min="0" max="59" value="0"
+                      placeholder="ss" aria-label="Start seconds" />
+                  </div>
+                </div>
+                <div class="clip-arrow">→</div>
+                <div class="clip-manual-field">
+                  <label class="clip-manual-label" for="ytEndMin">End</label>
+                  <div class="clip-manual-inputs">
+                    <input type="number" class="clip-num-input" id="ytEndMin" min="0" max="59" value="3"
+                      placeholder="mm" aria-label="End minutes" />
+                    <span class="clip-colon">:</span>
+                    <input type="number" class="clip-num-input" id="ytEndSec" min="0" max="59" value="30"
+                      placeholder="ss" aria-label="End seconds" />
+                  </div>
+                </div>
+              </div>
+              <div class="clip-duration-info" id="youtubeClipInfo">Saving 3:30 of the track</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Color picker -->
+      <div class="color-section">
+        <label class="input-label">Record Label Color</label>
+        <div class="color-swatches" id="colorSwatches">
+          <button class="swatch active" data-color="#e8d5b7" style="background:#e8d5b7;" aria-label="Cream"></button>
+          <button class="swatch" data-color="#c4a882" style="background:#c4a882;" aria-label="Tan"></button>
+          <button class="swatch" data-color="#8b7355" style="background:#8b7355;" aria-label="Brown"></button>
+          <button class="swatch" data-color="#6b8e7f" style="background:#6b8e7f;" aria-label="Sage"></button>
+          <button class="swatch" data-color="#7c8fad" style="background:#7c8fad;" aria-label="Steel Blue"></button>
+          <button class="swatch" data-color="#a87c8e" style="background:#a87c8e;" aria-label="Mauve"></button>
+          <button class="swatch" data-color="#c17c5a" style="background:#c17c5a;" aria-label="Terracotta"></button>
+          <button class="swatch" data-color="#e2c4c4" style="background:#e2c4c4;" aria-label="Blush"></button>
+        </div>
+      </div>
+
+      <button class="save-btn" id="saveMemoryBtn">
+        <span class="save-icon">◎</span>
+        Press into wax
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODAL: Play Memory                                           -->
+  <!-- ============================================================ -->
+  <div class="modal-overlay" id="playModal" role="dialog" aria-modal="true" aria-labelledby="playModalTitle">
+    <div class="modal-panel play-panel" id="playModalPanel">
+      <button class="modal-close" id="playModalClose" aria-label="Close">✕</button>
+
+      <!-- Vinyl Player -->
+      <div class="player-stage">
+        <div class="player-arm-container">
+          <div class="tonearm" id="tonearm">
+            <div class="tonearm-pivot"></div>
+            <div class="tonearm-body"></div>
+            <div class="tonearm-head"></div>
+          </div>
+        </div>
+        <div class="player-record-wrap">
+          <div class="player-vinyl" id="playerVinyl" title="Click to play / pause" role="button" tabindex="0"
+            aria-label="Play or pause">
+            <div class="player-Senoritas"></div>
+            <div class="player-label" id="playerLabel">
+              <div class="player-hole"></div>
+              <div class="player-label-text" id="playerLabelText"></div>
+            </div>
+            <div class="vinyl-play-hint" id="vinylPlayHint">
+              <span class="vinyl-hint-icon">▶</span>
+            </div>
+          </div>
+          <div class="player-shadow"></div>
+        </div>
+      </div>
+
+      <!-- Clip badge (shown when a moment is saved) -->
+      <div class="clip-badge" id="clipBadge" style="display:none;">
+        <span class="clip-badge-icon">✂</span>
+        <span class="clip-badge-text" id="clipBadgeText">Favourite moment: 1:00 – 2:30</span>
+      </div>
+
+      <!-- Embedded player (Spotify / YouTube / Apple Music inline) -->
+      <div class="embedded-player-wrap" id="embeddedPlayerWrap" style="display:none;">
+        <div class="embedded-player-container" id="embeddedPlayerContainer"></div>
+        <div class="embed-open-link-row" id="embedOpenLinkRow"></div>
+      </div>
+
+      <!-- Track info -->
+      <div class="player-info">
+        <div class="player-date" id="playerDate"></div>
+        <h2 class="player-title" id="playModalTitle">Song Title</h2>
+        <p class="player-note" id="playerNote"></p>
+        
+        <!-- AI Mood Analytics -->
+        <div class="player-analytics" id="playerAnalytics" style="display:none; margin-top: 15px; font-size: 0.85rem; color: var(--ink-secondary);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+            <span style="font-weight: 500; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase;">Mood</span>
+            <span id="playerMood" style="background: rgba(0,0,0,0.05); padding: 2px 8px; border-radius: 12px; font-weight: 600;">Calm</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-weight: 500; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase;">Energy</span>
+            <div style="width: 100px; height: 6px; background: rgba(0,0,0,0.1); border-radius: 3px; overflow: hidden; position: relative;">
+              <div id="playerEnergyFill" style="height: 100%; width: 50%; background: var(--accent); border-radius: 3px;"></div>
+            </div>
+          </div>
+          <div id="playerTags" style="margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap;"></div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="player-controls" id="playerControls">
+        <audio id="audioPlayer" preload="auto"></audio>
+        <div class="progress-wrap">
+          <div class="progress-bar-bg" id="progressBg">
+            <div class="progress-bar-fill" id="progressFill"></div>
+            <!-- Clip range overlay (for file clips) -->
+            <div class="progress-clip-overlay" id="progressClipOverlay" style="display:none;"></div>
+          </div>
+          <div class="time-labels">
+            <span id="currentTime">0:00</span>
+            <span id="totalTime">0:00</span>
+          </div>
+        </div>
+
+        <div class="controls-row">
+          <button class="ctrl-btn" id="restartBtn" aria-label="Restart">⟪</button>
+          <button class="ctrl-btn play-pause-btn" id="playPauseBtn" aria-label="Play/Pause"><span
+              class="pp-icon">▶</span></button>
+          <button class="ctrl-btn" id="muteBtn" aria-label="Mute">♪</button>
+        </div>
+
+        <!-- External link -->
+        <div class="external-link-area" id="externalLinkArea" style="display:none;">
+          <a class="external-link-btn" id="externalLinkBtn" href="#" target="_blank" rel="noopener">
+            <span id="externalLinkIcon"></span>
+            <span id="externalLinkLabel">Open in Spotify</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Delete button -->
+      <button class="delete-btn" id="deleteMemoryBtn">Remove this memory</button>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODAL: AI Search                                            -->
+  <!-- ============================================================ -->
+  <div class="modal-overlay" id="searchModal" role="dialog" aria-modal="true">
+    <div class="modal-panel search-panel">
+      <button class="modal-close" id="searchModalClose">✕</button>
+      <div class="modal-header">
+        <h2 class="modal-title">Telekenesis</h2>
+        <p class="modal-subtitle">Rediscover your past through feelings & music.</p>
+      </div>
+      <div class="search-input-wrap">
+        <input type="text" id="aiSearchInput" class="text-input" placeholder="Search by mood, weather, or deep memories..." />
+        <button id="aiSearchBtn" class="save-btn" style="margin-top:10px;">Ask your past</button>
+      </div>
+      <div id="searchResults" class="search-results-list"></div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODAL: Insights Dashboard                                  -->
+  <!-- ============================================================ -->
+  <div class="modal-overlay" id="analyticsModal" role="dialog" aria-modal="true">
+    <div class="modal-panel analytics-panel">
+      <button class="modal-close" id="analyticsModalClose">✕</button>
+      <div class="modal-header">
+        <h2 class="modal-title">Your Sound Insights</h2>
+        <p class="modal-subtitle">A visual journey through your listening patterns.</p>
+      </div>
+      <div class="analytics-grid">
+        <div class="analytics-card">
+            <h3>Mood Palette</h3>
+            <div id="moodNoData" style="display:none; text-align:center; padding: 40px 20px; opacity:0.5; font-size:0.8rem;">
+            No mood data yet. Save some memories with notes to see your palette!
+          </div>
+          <canvas id="moodChart" height="250"></canvas>
+        </div>
+        <div class="analytics-card">
+            <h3>Top Senoritas</h3>
+            <ul id="topArtistsList" class="analytics-list"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODAL: Timeline Playback                                      -->
+  <!-- ============================================================ -->
+  <div class="modal-overlay" id="timelineModal" role="dialog" aria-modal="true">
+    <div class="modal-panel timeline-panel">
+        <div class="timeline-background" id="timelineBg"></div>
+        <button class="modal-close" id="timelineModalClose" style="color: white; border-color: white;">✕</button>
+        
+        <div class="timeline-content-wrap">
+            <div id="timelineCard" class="timeline-card">
+                <div class="timeline-date" id="timelineDate"></div>
+                <h1 id="timelineTitle" class="timeline-title"></h1>
+                <h2 id="timelineArtist" class="timeline-artist"></h2>
+                <div id="timelineNote" class="timeline-note"></div>
+                <div id="timelineTags" class="timeline-tags"></div>
+            </div>
+        </div>
+
+        <div class="timeline-controls">
+            <div class="timeline-progress-bg">
+                <div id="timelineProgress" class="timeline-progress-fill"></div>
+            </div>
+            <div class="timeline-btns">
+                <button id="timelinePrevBtn">‹</button>
+                <button id="timelinePlayPauseBtn">▶</button>
+                <button id="timelineNextBtn">›</button>
+                <button id="timelineSpeedBtn">1x</button>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MODAL: Profile                                              -->
+  <!-- ============================================================ -->
+  <div class="modal-overlay" id="profileModal" role="dialog" aria-modal="true">
+    <div class="modal-panel profile-panel">
+      <button class="modal-close" id="profileModalClose">✕</button>
+      <div class="modal-header">
+        <h2 class="modal-title">Your Profile</h2>
+        <p class="modal-subtitle">Customize how others see your journey.</p>
+      </div>
+      <div class="input-group">
+        <label class="input-label">Public Username</label>
+        <input type="text" id="usernameInput" class="text-input" placeholder="Choose a unique username..." />
+      </div>
+      <div class="input-group">
+        <label class="input-label">Bio</label>
+        <textarea id="bioInput" class="text-input textarea" placeholder="Tell the world about your sound..."></textarea>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+        <label class="input-label" style="margin:0;">Public Profile</label>
+        <input type="checkbox" id="publicProfileToggle" />
+      </div>
+      <button id="saveProfileBtn" class="save-btn" style="margin-top:20px;">Save Profile</button>
+      <div id="profileShareSection" style="display:none; margin-top:30px; border-top: 1px solid rgba(255,255,255,0.05); padding-top:20px;">
+        <p class="modal-subtitle" style="margin-bottom:10px;">Your Public Link:</p>
+        <div style="display:flex; gap:10px;">
+           <input type="text" id="publicLinkInput" class="text-input" readonly />
+           <button id="copyProfileBtn" class="feature-link" style="text-transform:none;">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
