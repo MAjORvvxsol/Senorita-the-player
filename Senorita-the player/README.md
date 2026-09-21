@@ -54,7 +54,7 @@ Or just visit → **[groove-journal.vercel.app](https://senorita-the-player.verc
 ## ✦ Tech Stack
 
 ```
-HTML  ·  CSS  ·  JavaScript
+HTML  ·  CSS  ·  JavaScript.
 ```
 
 No frameworks. No dependencies. No build tools.  
